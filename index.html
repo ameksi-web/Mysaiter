@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySait - Эпичные Аватарки | 11 лет, 🔥 Легендарное Качество!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #fff;
+            --secondary-color: #000;
+            --accent-color: #ffd700;
+            --bg-color: #000;
+            --text-color: #fff;
+            --border-color: #fff;
+            --hover-color: #ffed4e;
+            --gradient-bg: linear-gradient(135deg, #000 0%, #0a0a0a 30%, #1a1a1a 70%, #000 100%);
+            --card-bg: rgba(255,255,255,0.05);
+            --glow: 0 0 20px rgba(255,215,0,0.5);
+        }
+        [data-theme="color"] {
+            --accent-color: #ffd700;
+            --hover-color: #ffed4e;
+            --gradient-bg: linear-gradient(135deg, #000 0%, #1a1a2e 50%, #16213e 100%);
+            --card-bg: rgba(255,255,255,0.08);
+            --glow: 0 0 30px rgba(255,215,0,0.7);
+        }
+        body {
+            background: var(--gradient-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            overflow-x: hidden;
+            transition: all 1s ease-in-out;
+            filter: grayscale(100%) contrast(1.4) saturate(0.7);
+        }
+        body[data-theme="color"] { filter: none saturate(1.3); }
+        .spark {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: spark-move 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+            box-shadow: var(--glow), 0 0 50px var(--accent-color);
+        }
+        @keyframes spark-move {
+            0% { transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5); opacity: 0; }
+            15% { opacity: 1; scale(1.6); }
+            50% { transform: translateY(35vh) translateX(65vw) rotate(180deg) scale(2.2); opacity: 1; }
+            85% { opacity: 1; }
+            100% { transform: translateY(-60px) translateX(140vw) rotate(1080deg) scale(0.5); opacity: 0; }
+        }
+        .indicator {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 35px 0;
+            text-align: center;
+            transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(30px);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        .indicator::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, var(--accent-color) 50%, transparent 70%);
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            transition: transform 1.2s;
+            opacity: 0.9;
+        }
+        .indicator:hover::before { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        .indicator:hover {
+            transform: scale(1.15) translateY(-30px) rotate(3deg);
+            box-shadow: 0 35px 70px rgba(255,215,0,0.4);
+            border-color: var(--hover-color);
+            filter: brightness(1.3) drop-shadow(var(--glow));
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 auto 30px;
+            display: block;
+            transition: all 0.7s ease;
+            border: 6px solid var(--border-color);
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) brightness(0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        body[data-theme="color"] .avatar { filter: brightness(1.2); }
+        .avatar::after {
+            content: '';
+            position: absolute;
+            top: -6px; left: -6px; right: -6px; bottom: -6px;
+            background: conic-gradient(from 0deg, var(--accent-color), transparent 60%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.7s;
+            z-index: -1;
+        }
+        .avatar:hover { 
+            transform: rotate(360deg) scale(1.5); 
+            filter: none !important;
+            box-shadow: var(--glow);
+        }
+        .avatar:hover::after { opacity: 1; animation: spin 4s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .modal-content {
+            background: rgba(17,17,17,0.99);
+            color: var(--text-color);
+            border: 4px solid var(--accent-color);
+            border-radius: 30px;
+            backdrop-filter: blur(35px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+        }
+        .custom-star {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-color);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            margin: 0 3px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            filter: grayscale(100%);
+            position: relative;
+        }
+        body[data-theme="color"] .custom-star { filter: none; }
+        .custom-star:hover, .custom-star.filled { 
+            background: var(--hover-color); 
+            transform: scale(1.4) rotate(10deg); 
+            filter: none !important; 
+            box-shadow: var(--glow);
+            z-index: 1;
+        }
+        .form-control, .btn {
+            background: rgba(255,255,255,0.18);
+            color: var(--text-color);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            transition: all 0.7s;
+            backdrop-filter: blur(25px);
+            font-weight: 700;
+        }
+        .form-control:focus { 
+            border-color: var(--accent-color); 
+            box-shadow: 0 0 30px rgba(255,215,0,0.5);
+            transform: scale(1.03);
+        }
+        .btn:hover {
+            background: var(--hover-color) !important;
+            color: var(--secondary-color) !important;
+            transform: translateY(-7px) scale(1.12);
+            box-shadow: 0 15px 35px rgba(255,215,0,0.6);
+        }
+        .portfolio-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 25px;
+            transition: all 1s ease;
+            margin: 20px 0;
+            filter: grayscale(100%) contrast(1.3);
+            border: 4px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        body[data-theme="color"] .portfolio-img { filter: contrast(1.3) saturate(1.2); }
+        .portfolio-img::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.25), transparent);
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .portfolio-img:hover { 
+            transform: scale(1.2) rotate(5deg); 
+            filter: none !important;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+        .portfolio-img:hover::before { opacity: 1; animation: shimmer 4s infinite; }
+        @keyframes shimmer { 0%, 100% { transform: translateX(-100%); } 50% { transform: translateX(100%); } }
+        .fun-fact {
+            background: rgba(255,215,0,0.12);
+            border-left: 7px solid var(--accent-color);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 20px 20px 0;
+            animation: slideInGlow 2s ease-out;
+            transition: all 0.6s;
+            box-shadow: inset 0 0 25px rgba(255,215,0,0.2);
+            font-style: italic;
+            font-weight: 500;
+        }
+        @keyframes slideInGlow { from { opacity: 0; transform: translateX(-80px); } to { opacity: 1; transform: translateX(0); } }
+        .fun-fact:hover { 
+            box-shadow: inset 0 0 40px rgba(255,215,0,0.3), 0 10px 25px rgba(0,0,0,0.5); 
+            transform: translateX(15px);
+        }
+        .help-section {
+            background: rgba(0,0,0,0.9);
+            border-radius: 30px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+            border: 4px solid var(--border-color);
+            backdrop-filter: blur(40px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+        .theme-switcher {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 10000;
+        }
+        .theme-btn {
+            background: rgba(255,255,255,0.25);
+            border: 4px solid var(--border-color);
+            color: var(--text-color);
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.6s;
+            font-weight: bold;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .theme-btn:hover { 
+            background: var(--hover-color); 
+            color: var(--secondary-color); 
+            transform: rotate(360deg) scale(1.15); 
+            box-shadow: 0 15px 35px rgba(255,215,0,0.5);
+        }
+        .review-item {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid var(--accent-color);
+            animation: fadeInUp 0.8s ease-out;
+            transition: all 0.5s;
+            font-size: 1em;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .review-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s;
+        }
+        .review-item:hover { 
+            transform: translateX(10px) scale(1.03); 
+            box-shadow: 0 15px 35px rgba(255,215,0,0.3); 
+        }
+        .review-item:hover::before { transform: translateX(100%); }
+        .review-header { font-weight: bold; color: var(--accent-color); font-size: 1.1em; }
+        .review-text { margin: 10px 0; line-height: 1.5; }
+        .review-date { font-size: 0.85em; color: #ddd; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .public-notice {
+            background: rgba(255,215,0,0.2);
+            border: 4px solid var(--accent-color);
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            margin: 25px 0;
+            animation: pulseGlow 3s infinite;
+            box-shadow: 0 15px 40px rgba(255,215,0,0.3);
+        }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 25px rgba(255,215,0,0.5); } 50% { box-shadow: 0 0 50px rgba(255,215,0,0.8); } }
+        .modal-dialog { max-width: 600px; }
+        .stars-container { justify-content: center; gap: 8px; }
+        .avg-rating { text-align: center; font-size: 1.3em; color: var(--accent-color); margin-bottom: 15px; font-weight: bold; }
+        @media (max-width: 768px) {
+            .indicator { margin: 15px; padding: 30px; }
+            .avatar { width: 90px; height: 90px; }
+            .portfolio-img { height: 220px; }
+            .help-section { padding: 40px 25px; margin: 40px 15px; }
+            .custom-star { width: 24px; height: 24px; }
+            .review-item { font-size: 0.95em; padding: 16px; }
+            .fun-fact { padding: 20px; }
+        }
+    </style>
+</head>
+<body data-theme="bw">
+    <div class="theme-switcher">
+        <button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-palette"></i> Тема: Ч/Б ↔ Цвет</button>
+    </div>
+
+    <div class="container mt-5">
+        <!-- Публичное -->
+        <div class="public-notice">
+            <h4><i class="fas fa-globe"></i> MySait - Полностью Открыто!</h4>
+            <p class="fs-5">Доступен всем: <a href="https://yourusername.github.io/MySait" class="text-light fw-bold" target="_blank">MySait на GitHub Pages</a> | <button class="btn btn-sm btn-outline-light" onclick="copyLink()"><i class="fas fa-copy"></i> Копировать Ссылку</button></p>
+        </div>
+
+        <!-- Intro -->
+        <div class="text-center mb-5 animate__animated animate__fadeInDown">
+            <h1 class="display-2 mb-4">✨ MySait: Легендарные Аватарки</h1>
+            <p class="lead fs-3">Мне 11 лет, всего 1 месяц в деле, но качество - легенда! Друг с FunPay вдохновил. Создам аватарку, которая взорвёт твой профиль! 🔥</p>
+            <div class="fun-fact">
+                <strong><i class="fas fa-star"></i> Эпичный Прикол:</strong> Мои аватарки - искры в цифровой ночи: зажигают чаты и приносят лайки! Бесплатный глитч-эффект, если поставишь 5 звёзд. ✨
+            </div>
+        </div>
+
+        <!-- Форма использования -->
+        <form id="usageForm" class="mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <input type="text" class="form-control fs-4" placeholder="Что ты используешь? (Discord, Steam, VK, Telegram...)" id="usageInput">
+                    <button type="submit" class="btn btn-warning mt-4 w-100 fs-4"><i class="fas fa-rocket"></i> Расскажи - Подберём Стиль!</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- 3 Показателя -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="indicator animate__animated animate__fadeInLeft" id="indicator1">
+                    <div class="avatar" style="background: linear-gradient(45deg, #ffd700, #ffed4e); display: flex; align-items: center; justify-content: center; font-size: 50px;" onclick="openReviews('indicator1')">👨‍🎨</div>
+                    <h3 class="h2"><i class="fas fa-palette"></i> Моя Работа</h3>
+                    <p class="fs-5">Эпичные аватарки за 1-1.5 часа. Adobe Photoshop - каждый пиксель на своём месте. Цена фиксированная, качество легендарное!</p>
+                    <div class="fun-fact">Факт: Твоя аватарка - мини-история о тебе. Автоматически адаптирую под твой стиль и платформу!</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="indicator animate__animated animate__fadeInUp" id="indicator2">
+                    <div class="avatar" style="background: linear-gradient(45deg, #00ff00, #32cd32); display: flex; align-items: center; justify-content: center; font-size: 50px;" onclick="openReviews('indicator2')">💰</div>
+                    <h3 class="h2"><i class="fas fa-coins"></i> Цены Продажи</h3>
+                    <p class="fs-5">От 1 до 15 рублей - какое настроение, такая и цена! 😎 Не договорная, но всегда справедливо.</p>
+                    <div class="fun-fact">Прикол: Если день радужный - скидка 50% + эксклюзивный стикер в подарок. Проверь прогноз! 🌈</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="indicator animate__animated animate__fadeInRight" id="indicator3">
+                    <div class="avatar" style="background: linear-gradient(45deg, #ff69b4, #ff1493); display: flex; align-items: center; justify-content: center; font-size: 50px;" onclick="openReviews('indicator3')">🔗</div>
+                    <h3 class="h2"><i class="fas fa-link"></i> FunPay Ссылки</h3>
+                    <p class="fs-5"><a href="https://funpay.com/users/12642352/" target="_blank" class="text-warning fw-bold">Мой Профиль</a><br>
+                    <a href="https://funpay.com/users/16357692/" target="_blank" class="text-warning fw-bold">Друг (из-за него стартанул!)</a></p>
+                    <div class="fun-fact">Факт: Он поделился идеями - я взлетел. Теперь твоя очередь вдохновляться и покупать на FunPay!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секция Помощи -->
+        <div class="help-section animate__animated animate__fadeIn">
+            <h2 class="display-4 mb-4"><i class="fas fa-hands-helping"></i> Я Могу Помочь Тебе!</h2>
+            <p class="fs-4 mb-4">Заполни форму - сообщение сохранится локально и скопируется в буфер. Отправь на nikzavar@mail.ru - свяжусь для твоей аватарки!</p>
+            <form id="helpForm">
+                <div class="row">
+                    <div class="col-md-6 mb-4"><input type="text" class="form-control fs-4" placeholder="Твоё имя" id="nameInput" required></div>
+                    <div class="col-md-6 mb-4"><input type="number" class="form-control fs-4" placeholder="Сколько тебе лет?" id="ageInput" required></div>
+                </div>
+                <div class="mb-4"><input type="number" class="form-control fs-4" placeholder="Сколько лет в теме? (опыт)" id="experienceInput"></div>
+                <div class="mb-4"><textarea class="form-control fs-4" rows="5" placeholder="Что нужно для работы? (описание стиля, идеи, ссылки на примеры фото)" id="workDesc" required></textarea></div>
+                <button type="submit" class="btn btn-success w-100 fs-4"><i class="fas fa-paper-plane"></i> Отправить на Email & Сохранить</button>
+            </form>
+            <div id="savedMessage" class="mt-4 alert alert-success fs-4" style="display:none;"><i class="fas fa-check-circle"></i> Успех! Всё сохранено локально. Текст скопирован - пришли на email. Жду деталей для твоей эпичной аватарки! 🚀</div>
+        </div>
+
+        <!-- Портфолио -->
+        <div class="mt-5">
+            <h2 class="text-center mb-5 display-3 animate__animated animate__bounceIn">🎨 Мои Эпичные Работы</h2>
+            <div class="row" id="portfolio">
+                <div class="col-md-4 mb-4">
+                    <img src="https://via.placeholder.com/500x280/ffd700/000?text=Эпичная+Аватарка+1" alt="Работа 1" class="portfolio-img img-fluid">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <img src="https://via.placeholder.com/500x280/ff69b4/000?text=Глитч+Аватарка+2" alt="Работа 2" class="portfolio-img img-fluid">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <img src="https://via.placeholder.com/500x280/00ff00/000?text=Неон+Аватарка+3" alt="Работа 3" class="portfolio-img img-fluid">
+                </div>
+            </div>
+            <p class="text-center fs-4 mb-4">Генератор идей: Кликни для добавления новой работы!</p>
+            <button class="btn btn-warning mx-auto d-block fs-4" onclick="addPortfolioImage()"><i class="fas fa-plus-circle"></i> Добавить Новую Идею</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно для отзывов -->
+    <div class="modal fade" id="reviewsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-bottom border-warning">
+                    <h5 class="modal-title fs-3" id="modalTitle"><i class="fas fa-comments"></i> Отзывы & Рейтинг</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="avg-rating" id="avgRating"></div>
+                    <div id="reviewsList" class="mb-4"></div>
+                    <form id="reviewForm">
+                        <div class="mb-4">
+                            <label class="form-label fs-5">Твоя оценка (кликни по звезде):</label>
+                            <div class="stars-container" id="starRating">
+                                <div class="custom-star" data-value="1"></div>
+                                <div class="custom-star" data-value="2"></div>
+                                <div class="custom-star" data-value="3"></div>
+                                <div class="custom-star" data-value="4"></div>
+                                <div class="custom-star" data-value="5"></div>
+                            </div>
+                            <input type="hidden" id="ratingValue" value="0">
+                        </div>
+                        <div class="mb-4">
+                            <textarea class="form-control fs-5" placeholder="Почему ставишь эту оценку? (можно добавить ссылку на FunPay)" id="reviewText" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100 fs-5"><i class="fas fa-star"></i> Добавить Отзыв</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+    <script>
+        // Тема переключатель
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            const newTheme = current === 'bw' ? 'color' : 'bw';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.querySelector('.theme-btn').innerHTML = `<i class="fas fa-${newTheme === 'color' ? 'sun' : 'moon'}"></i> Тема: ${newTheme === 'color' ? 'Цвет' : 'Ч/Б'}`;
+        }
+        const savedTheme = localStorage.getItem('theme') || 'bw';
+        document.body.setAttribute('data-theme', savedTheme);
+        document.querySelector('.theme-btn').innerHTML = `<i class="fas fa-${savedTheme === 'color' ? 'sun' : 'moon'}"></i> Тема: ${savedTheme === 'color' ? 'Цвет' : 'Ч/Б'}`;
+
+        // Движущиеся искры (улучшено: больше, ярче, случайные позиции)
+        setInterval(() => {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            spark.style.left = Math.random() * 100 + 'vw';
+            spark.style.top = Math.random() * 100 + 'vh';
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 7000);
+        }, 120);
+
+        // Копировать ссылку
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.origin + '/MySait').then(() => {
+                alert('Ссылка скопирована! Теперь любой может зайти и увидеть сайт, а не код. Поделись в FunPay! 🌐');
+            }).catch(() => alert('Ошибка копирования - скопируй вручную: ' + window.location.origin + '/MySait'));
+        }
+
+        // Форма "Что используешь?"
+        document.getElementById('usageForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const val = document.getElementById('usageInput').value.trim();
+            if (val) {
+                alert(`Супер! Ты используешь ${val} - идеально для кастомной аватарки. Переходим к форме заказа...`);
+                localStorage.setItem('lastUsage', val);
+                document.querySelector('.help-section').scrollIntoView({behavior: 'smooth'});
+            } else {
+                alert('Расскажи, что используешь, чтобы я подобрал стиль! 😊');
+            }
+        });
+
+        // Кастомные звездочки (улучшено: rotate на hover)
+        document.getElementById('starRating').addEventListener('click', e => {
+            if (e.target.classList.contains('custom-star')) {
+                const value = parseInt(e.target.dataset.value);
+                document.getElementById('ratingValue').value = value;
+                e.target.parentNode.querySelectorAll('.custom-star').forEach((s, i) => {
+                    s.classList.toggle('filled', i < value);
+                });
+            }
+        });
+
+        // Отзывы с sample, средним рейтингом и качественным отображением
+        const reviewsKey = 'reviews';
+        function loadReviews() { 
+            let data = JSON.parse(localStorage.getItem(reviewsKey) || '{}');
+            if (Object.keys(data).length === 0) {
+                data = {
+                    indicator1: [
+                        {stars: 5, text: 'Легендарная работа! За 1 час создал аватарку, которая идеально вписалась в мой Discord. Качество - 10/10, несмотря на возраст. Беру ещё!', date: new Date(Date.now() - 1*86400000).toISOString()},
+                        {stars: 5, text: 'Креатив на уровне! Photoshop магия - пиксели оживают. 11 лет, а рисует как профи. FunPay ссылка: https://funpay.com/users/12642352/', date: new Date(Date.now() - 2*86400000).toISOString()},
+                        {stars: 4, text: 'Отлично, но можно добавить больше вариантов. Всё равно супер за такие деньги. Рекомендую всем геймерам!', date: new Date(Date.now() - 3*86400000).toISOString()}
+                    ],
+                    indicator2: [
+                        {stars: 5, text: 'Цены - мечта! За 3р получил шедевр с бонусом. Настроение учли - радуга в аватарке! 😎', date: new Date(Date.now() - 1*86400000).toISOString()},
+                        {stars: 5, text: 'Супер-выгодные цены, не договорные, но всегда приятно. Идеально для быстрого апгрейда профиля.', date: new Date(Date.now() - 2*86400000).toISOString()}
+                    ],
+                    indicator3: [
+                        {stars: 5, text: 'Ссылки на FunPay - топ! Друг - настоящий мотиватор. Благодаря этому начал сам продавать. Качество сделок огонь.', date: new Date(Date.now() - 1*86400000).toISOString()},
+                        {stars: 5, text: 'Профиль чистый, отзывы реальные. Стартовал здесь - теперь мой доход растёт. Спасибо за вдохновение!', date: new Date(Date.now() - 2*86400000).toISOString()}
+                    ]
+                };
+                saveReviews(data);
+            }
+            return data; 
+        }
+        function saveReviews(data) { localStorage.setItem(reviewsKey, JSON.stringify(data)); }
+        function calculateAvg(ind) {
+            const all = loadReviews();
+            const revs = all[ind] || [];
+            if (revs.length === 0) return 0;
+            return (revs.reduce((sum, r) => sum + r.stars, 0) / revs.length).toFixed(1);
+        }
+
+        function openReviews(ind) {
+            const modal = new bootstrap.Modal(document.getElementById('reviewsModal'));
+            const titles = {indicator1: 'Моя Работа', indicator2: 'Цены', indicator3: 'FunPay Ссылки'};
+            document.getElementById('modalTitle').textContent = `Отзывы: ${titles[ind]}`;
+            const avg = calculateAvg(ind);
+            const count = loadReviews()[ind]?.length || 0;
+            document.getElementById('avgRating').innerHTML = `<i class="fas fa-star"></i> Средний рейтинг: ${avg}/5 (${count} отзывов)`;
+            fetchReviews(ind);
+            document.getElementById('reviewForm').onsubmit = e => {
+                e.preventDefault();
+                const rating = document.getElementById('ratingValue').value;
+                const text = document.getElementById('reviewText').value.trim();
+                if (rating > 0 && text.length > 10) {
+                    const all = loadReviews();
+                    if (!all[ind]) all[ind] = [];
+                    all[ind].push({stars: parseInt(rating), text, date: new Date().toISOString()});
+                    saveReviews(all);
+                    fetchReviews(ind);
+                    document.getElementById('avgRating').innerHTML = `<i class="fas fa-star"></i> Средний рейтинг: ${calculateAvg(ind)}/5 (${all[ind].length} отзывов)`;
+                    document.getElementById('reviewText').value = '';
+                    document.getElementById('starRating').querySelectorAll('.custom-star').forEach(s => s.classList.remove('filled'));
+                    document.getElementById('ratingValue').value = 0;
+                    alert('Отзыв сохранён! Твой фидбек помогает расти. Спасибо! 🌟');
+                } else {
+                    alert('Добавь оценку и текст (минимум 10 символов)!');
+                }
+            };
+            modal.show();
+        }
+
+        function fetchReviews(ind) {
+            const all = loadReviews();
+            const data = all[ind] || [];
+            document.getElementById('reviewsList').innerHTML = data.map(r => 
+                `<div class="review-item"><div class="d-flex mb-3"><div class="me-3">${Array.from({length: 5}, (_, i) => `<div class="custom-star ${i < r.stars ? 'filled' : ''}"></div>`).join('')}</div></div><div class="review-header">${r.stars}/5 ⭐</div><div class="review-text">${r.text}</div><div class="review-date"><i class="fas fa-clock"></i> ${new Date(r.date).toLocaleString('ru-RU', {day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'})}</div></div>`
+            ).join('') || '<div class="text-center text-muted py-5 fs-5"><i class="fas fa-star"></i> Пока нет отзывов. Будь первым - твой отзыв сделает сайт лучше!</div>';
+        }
+
+        // Форма помощи (улучшено: валидация, clipboard с форматированным текстом)
+        document.getElementById('helpForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const name = document.getElementById('nameInput').value.trim();
+            const age = document.getElementById('ageInput').value;
+            const experience = document.getElementById('experienceInput').value;
+            const desc = document.getElementById('workDesc').value.trim();
+            if (name && age && desc.length > 10) {
+                const data = { name, age, experience, desc, timestamp: new Date().toISOString() };
+                localStorage.setItem('helpData', JSON.stringify(data));
+                const text = `🌟 Новый Заказ Аватарки! 🌟\n\n👤 Имя: ${name}\n🕐 Возраст: ${age} лет\n📈 Опыт: ${experience || 'Не указан'} лет\n💡 Описание: ${desc}\n\n⏰ Время: ${new Date().toLocaleString('ru-RU')}\n\nПришли это на nikzavar@mail.ru - создам эпичную аватарку!`;
+                navigator.clipboard.writeText(text).then(() => {
+                    document.getElementById('savedMessage').style.display = 'block';
+                    setTimeout(() => document.getElementById('savedMessage').style.display = 'none', 6000);
+                    e.target.reset();
+                }).catch(() => alert('Сохранено локально! Скопируй текст вручную и отправь на email.'));
+            } else {
+                alert('Заполни имя, возраст и описание (минимум 10 символов)!');
+            }
+        });
+
+        // Автозагрузка формы
+        const savedHelp = localStorage.getItem('helpData');
+        if (savedHelp) {
+            const data = JSON.parse(savedHelp);
+            document.getElementById('nameInput').value = data.name || '';
+            document.getElementById('ageInput').value = data.age || '';
+            document.getElementById('experienceInput').value = data.experience || '';
+            document.getElementById('workDesc').value = data.desc || '';
+        }
+
+        // Авто-добавление в портфолио (с анимацией)
+        function addPortfolioImage() {
+            const row = document.getElementById('portfolio');
+            const col = document.createElement('div');
+            col.className = 'col-md-4 mb-4 animate__animated animate__zoomIn';
+            col.innerHTML = `<img src="https://via.placeholder.com/500x280/fff/000?text=Новая+Эпичная+Аватарка+${Date.now()}" class="portfolio-img img-fluid" alt="Новая работа">`;
+            row.appendChild(col);
+            alert('Новая идея добавлена! Замени URL на реальное фото для портфолио. 😊');
+        }
+
+        // Плавный скролл
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({behavior: 'smooth'});
+            });
+        });
+    </script>
+</body>
+</html>
